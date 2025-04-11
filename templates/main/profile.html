@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Профиль{% endblock %}
+
+{% block content %}
+<div class="profile-container">
+    <h2>Профиль пользователя</h2>
+
+    <div class="profile-header">
+        <div class="avatar">
+            {% if user.avatar %}
+                <img src="{{ user.avatar.url }}" alt="Аватар" class="avatar-img">
+            {% else %}
+                <img src="{% static 'images/default-avatar.png' %}" alt="Аватар" class="avatar-img">
+            {% endif %}
+        </div>
+        <div class="profile-info">
+            <p><strong>Имя:</strong> {{ user.first_name }}</p>
+            <p><strong>Фамилия:</strong> {{ user.last_name }}</p>
+            <p><strong>Юзернейм:</strong> {{ user.username }}</p>
+            <p><strong>Дата рождения:</strong> {{ user.date_of_birth|date:"d.m.Y" }}</p>
+        </div>
+    </div>
+
+    <div class="friends-section">
+        <h3>Список друзей</h3>
+        <!-- Здесь будет список друзей (будущая фича) -->
+        <p>Здесь будет отображаться список ваших друзей.</p>
+    </div>
+
+    <div class="edit-profile-section">
+        <h3>Редактировать профиль</h3>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn save">Сохранить изменения</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

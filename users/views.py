@@ -3,7 +3,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 
 from .permissions import IsOwnerOrAdmin, IsAdmin
 
-from .forms import RegistrationForm, LoginForm
+from .forms import RegistrationForm, LoginForm, EditProfileForm
 from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.decorators import login_required
 
@@ -56,6 +56,27 @@ def signup(request):
 def logout_view(request):
     logout(request)
     return redirect('main:homepage')
+
+
+from django.shortcuts import render, redirect
+from .forms import EditProfileForm
+
+@login_required
+def profile(request):
+    error = ''
+    if request.method == 'POST':
+        form = EditProfileForm(instance=request.user, data=request.POST, files=request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('users:profile')
+        else:
+            error = form.errors
+    else:
+        form = EditProfileForm(instance=request.user)
+
+    return render(request, 'main/profile.html', {'form': form, 'error': error})
+
+
 
 
 class UserViewSet(viewsets.ModelViewSet):

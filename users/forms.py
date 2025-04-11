@@ -18,3 +18,13 @@ class RegistrationForm(UserCreationForm):
             'date_of_birth': 'Дата рождения',
             'avatar': 'Фотография',
         }
+
+class EditProfileForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ['first_name', 'last_name', 'date_of_birth', 'avatar']
+        labels = {
+            'first_name': 'Имя',
+            'last_name': 'Фамилия',
+            'avatar': 'Фото профиля',
+        }

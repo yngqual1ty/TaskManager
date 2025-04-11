@@ -12,17 +12,25 @@
         <header class="header">
             <div class="header-content">
                 <a href="{% url 'main:homepage' %}" class="logo">Менеджер задач</a>
+
                 {% if user.is_authenticated %}
-                <nav class="nav">
-                    <a href="{% url 'main:tasks' %}">Список задач</a>
-                </nav>
-                    <a href="">{{ user.username }}</a>
-                    <a href="{% url 'users:logout' %}" class="btn logout">Выйти</a>
+                    <nav class="nav">
+                        <a href="{% url 'main:tasks' %}">Список задач</a>
+                    </nav>
+
+
+                    <div class="user-dropdown">
+                        <button class="btn user-btn">{{ user.username }} ▼</button>
+                        <div class="dropdown-content">
+                            <a href="{% url 'users:profile' %}">Профиль</a>
+                            <a href="{% url 'users:logout' %}">Выйти</a>
+                        </div>
+                    </div>
                 {% else %}
-                <div class="auth-buttons">
-                    <a href="{% url 'users:login' %}" class="btn login">Вход</a>
-                    <a href="{% url 'users:signup' %}" class="btn register">Регистрация</a>
-                </div>
+                    <div class="auth-buttons">
+                        <a href="{% url 'users:login' %}" class="btn login">Вход</a>
+                        <a href="{% url 'users:signup' %}" class="btn register">Регистрация</a>
+                    </div>
                 {% endif %}
             </div>
         </header>
