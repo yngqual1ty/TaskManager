@@ -95,3 +95,18 @@ python manage.py makemigrations
 python manage.py migrate
 python manage.py runserver
 ```
+
+🔑 API и документация
+Swagger: /swagger/
+
+ReDoc: /redoc/
+
+Получение токена: POST /api/token/
+
+Обновление токена: POST /api/token/refresh/
+
+Регистрация: POST /api/users/register/
+
+
+👨‍💻 Автор
+yngqual1ty
