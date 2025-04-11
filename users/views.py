@@ -28,21 +28,28 @@ def login_view(request):
             else:
                 error = 'Неверное имя пользователя или пароль.'
         else:
-            error = 'Неверные данные.'
+            error = form.errors
     else:
         form = LoginForm()
     return render(request, 'registration/login.html', {'form': form, 'error': error})
 
 
 def signup(request):
+    error = ''
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
             form.save()
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password1']
+            user = authenticate(request, username=username, password=password)
+            login(request, user)
             return redirect('main:homepage')
+        else:
+            error = form.errors
     else:
         form = RegistrationForm()
-    return render(request, 'registration/signup.html', {'form': form})
+    return render(request, 'registration/signup.html', {'form': form, "error": error})
 
 
 @login_required

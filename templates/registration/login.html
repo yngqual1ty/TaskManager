@@ -18,7 +18,21 @@
             {{ form.password }}
 
             <button type="submit" class="btn save">Войти</button>
-            <div class="error">{{ error }}</div>
+            {% if form.errors %}
+                <div class="form-errors">
+                    <ul>
+                        {% for field, errors in form.errors.items %}
+                            <li>
+                                <ul>
+                                    {% for error in errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
         </form>
         <h3>Нет аккаунта? <a href="{% url 'users:signup' %}">Зарегистрируйтесь</a></h3>
     </div>

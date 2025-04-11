@@ -31,7 +31,21 @@
 
             <button type="submit" class="btn save">Создать аккаунт</button>
         </form>
-        <div>{{ error }}</div>
+        {% if form.errors %}
+            <div class="form-errors">
+                <ul>
+                    {% for field, errors in form.errors.items %}
+                        <li>
+                            <ul>
+                                {% for error in errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
         <h3>Есть аккаунт? <a href="{% url 'users:login' %}">Вход</a></h3>
     </div>
 {% endblock %}

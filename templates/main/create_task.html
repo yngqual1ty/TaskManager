@@ -26,7 +26,9 @@
             <button type="submit" class="btn save">Сохранить</button>
         </form>
         {% if error %}
-            <p>{{ error }}</p>
+            <div class="form-errors">
+                <li>{{ error }}</li>
+            </div>
         {% endif %}
     </div>
 {% endblock %}

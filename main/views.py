@@ -42,7 +42,7 @@ def create_task(request):
             task.save()
             return redirect('main:tasks')
         else:
-            error = 'Форма заполнена неверно'
+            error = 'Неверно заполнен дедлайн'
     form = CreateTaskForm()
     context = {'form': form, 'error': error}
     return render(request, 'main/create_task.html', context)
@@ -58,7 +58,7 @@ def edit_task(request, task_id):
             form.save()
             return redirect('main:tasks')
         else:
-            error = 'Форма заполнена неверно'
+            error = 'Неверно заполнен дедлайн'
     form = EditTaskForm(instance=task)
     context = {'form': form, 'task': task, 'error': error}
     return render(request, 'main/edit_task.html', context)

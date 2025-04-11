@@ -396,3 +396,36 @@ input[type="search"] {
 }
 
 
+
+
+.form-errors {
+    border: 1px solid #e74c3c;
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    margin-top: 30px;
+}
+
+.form-errors ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.form-errors li {
+    margin: 5px 0;
+}
+
+.form-errors strong {
+    font-weight: bold;
+}
+
+.form-errors li ul {
+    margin-left: 20px;
+}
+
+.form-errors li ul li {
+    font-size: 0.9em;
+}
