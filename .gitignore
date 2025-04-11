@@ -10,8 +10,7 @@ venv/
 
 # Django
 db.sqlite3
-/media
-/staticfiles
+/static/media
 
 # VSCode / PyCharm
 .vscode/
