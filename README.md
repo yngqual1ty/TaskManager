@@ -67,14 +67,31 @@
 
 1. Клонируй репозиторий:
 
-```bash
+``` bash
 git clone https://github.com/yngqual1ty/TaskManager.git
 cd TaskManager
+```
 
-## 📦 Установка
-
-1. Клонируй репозиторий:
+2. Установи зависимости:
 
 ```bash
-git clone https://github.com/yngqual1ty/TaskManager.git
-cd TaskManager
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+3. Настрой базу данных (PostgreSQL) и файл .env:
+``` bash
+SECRET_KEY=your_secret_key
+DEBUG=True
+DB_NAME=manager_db
+DB_USER=lazym
+DB_PASSWORD=your_password
+DB_HOST=localhost
+DB_PORT=5432
+```
+4. Выполни миграции и запусти сервер
+``` bash
+python manage.py makemigrations
+python manage.py migrate
+python manage.py runserver
+```
