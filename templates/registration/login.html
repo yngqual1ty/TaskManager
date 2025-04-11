@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %} Вход {% endblock %}
+
+
+{% block content %}
+    <div class="form-container">
+        <h2>Вход</h2>
+        <form method="post">
+            {% csrf_token %}
+
+            <label for="id_username">{{ form.username.label }}</label>
+            {{ form.username }}
+
+            <label for="id_password">{{ form.password.label }}</label>
+            {{ form.password }}
+
+            <button type="submit" class="btn save">Войти</button>
+            <div class="error">{{ error }}</div>
+        </form>
+        <h3>Нет аккаунта? <a href="{% url 'users:signup' %}">Зарегистрируйтесь</a></h3>
+    </div>
+{% endblock %}

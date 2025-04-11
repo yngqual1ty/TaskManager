@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Результаты поиска{% endblock %}
+
+{% block content %}
+<div class="container">
+  <form action="{% url 'main:search_results' %}" class="Search" method="get">
+    <input class="Search-box" type="text" id="Search-box" name="q" placeholder="Найти задачу">
+    <label class="Search-label" for="Search-box"><i class="fa fa-search"></i></label>
+  </form>
+</div>
+
+<div class="task-section">
+    {% if object_list %}
+    <h2>Найденные задачи</h2>
+    <ul class="task-list active-tasks">
+        {% for task in object_list %}
+            <li class="task-card" id="task-{{ task.id }}">
+                <div class="task-header">
+                    <input type="checkbox" class="task-checkbox" {% if task.is_completed %}checked{% endif %}
+                        onclick="toggleTaskCompletion({{ task.id }})">
+                    <span class="task-title">{{ task.title }}</span>
+                    <span class="task-priority priority-{{ task.priority|lower }}">{{ task.priority }}</span>
+                </div>
+                <span class="task-deadline">Дедлайн: {{ task.deadline|date:"d.m.Y H:i" }}</span>
+                <div class="task-actions">
+                    <a href="{% url 'main:view_task' task.id %}" class="task-button view">Посмотреть</a>
+                    <a href="{% url 'main:edit_task' task.id %}" class="task-button edit" id="edit-{{ task.id }}">Изменить</a>
+                    <a href="#" class="task-button delete" onclick="confirmDelete({{ task.id }})">Удалить</a>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <h2>По вашему запросу ничего не найдено.</h2>
+    {% endif %}
+</div>
+<a href="{% url 'main:tasks' %}" class="back-task-button">Назад</a>
+{% endblock %}

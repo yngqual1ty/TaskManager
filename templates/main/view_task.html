@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+
+{% block title %} {{ task.title }} {% endblock %}
+
+{% block content %}
+
+<div class="task-details-container">
+        <h2 class="task-title">{{ task.title }}</h2>
+        <p class="task-priority priority-{{ task.priority|lower }}">Приоритет: {{ task.priority }}</p>
+        <p class="task-deadline">Дедлайн: {{ task.deadline|date:"d.m.Y H:i" }}</p>
+        <p class="task-description">Описание: {{ task.description }}</p>
+
+        <div class="task-actions">
+            <a href="{% url 'main:tasks' %}" class="btn back">Назад</a>
+            <a href="{% url 'main:edit_task' task.id %}" class="task-button edit" id="edit-{{ task.id }}">Изменить</a>
+            <a href="#" class="task-button delete" onclick="confirmDelete({{ task.id }})">Удалить</a>
+        </div>
+    </div>
+
+{% endblock %}

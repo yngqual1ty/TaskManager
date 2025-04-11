@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %} Главная страница {% endblock %}
+{% block content %}
+    {% if user.is_authenticated %}
+        <p>тут будут таблицы, друзья и тд</p>
+    {% else%}
+        <p>тут будет инфа и предложение зарегаться</p>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Менеджер задач{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="wrapper">
+        <header class="header">
+            <div class="header-content">
+                <a href="{% url 'main:homepage' %}" class="logo">Менеджер задач</a>
+                {% if user.is_authenticated %}
+                <nav class="nav">
+                    <a href="{% url 'main:tasks' %}">Список задач</a>
+                </nav>
+                    <a href="">{{ user.username }}</a>
+                    <a href="{% url 'users:logout' %}" class="btn logout">Выйти</a>
+                {% else %}
+                <div class="auth-buttons">
+                    <a href="{% url 'users:login' %}" class="btn login">Вход</a>
+                    <a href="{% url 'users:signup' %}" class="btn register">Регистрация</a>
+                </div>
+                {% endif %}
+            </div>
+        </header>
+
+        <main class="content">
+            {% block content %}{% endblock %}
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2025. Все права защищены.</p>
+        </footer>
+    </div>
+
+<div id="deleteModal" class="modal">
+    <div class="modal-content">
+        <p>Вы уверены, что хотите удалить эту задачу?</p>
+        <form id="deleteForm" method="post">
+                {% csrf_token %}
+            </form>
+        <div class="modal-buttons">
+            <button id="confirmDeleteBtn" class="btn delete">Удалить</button>
+            <button onclick="closeModal()" class="btn cancel">Отмена</button>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    let deleteTaskId = null;
+
+    function confirmDelete(taskId) {
+        deleteTaskId = taskId;
+        document.getElementById("deleteModal").style.display = "flex";
+    }
+
+    function closeModal() {
+        document.getElementById("deleteModal").style.display = "none";
+    }
+
+    document.getElementById("confirmDeleteBtn").addEventListener("click", function () {
+        if (deleteTaskId) {
+            fetch(`/tasks/${deleteTaskId}/delete/`, {
+                method: "POST",
+                headers: {
+                    "X-CSRFToken": getCSRFToken(),
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({})
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Ошибка сервера");
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    window.location.reload();
+                } else {
+                    alert("Ошибка при удалении!");
+                }
+            })
+            .catch(error => console.error("Ошибка:", error));
+        }
+    });
+
+    function getCSRFToken() {
+        return document.querySelector("#deleteForm input[name=csrfmiddlewaretoken]").value;
+    }
+
+    window.onclick = function(event) {
+        let modal = document.getElementById("deleteModal");
+        if (event.target === modal) {
+            closeModal();
+        }
+    };
+</script>
+
+<script>
+    function toggleTaskCompletion(taskId) {
+        fetch(`/tasks/${taskId}/toggle/`, {
+            method: "POST",
+            headers: {
+                "X-CSRFToken": getCSRFToken(),
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({})
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Ошибка сервера");
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                moveTaskInList(taskId, data.is_completed);
+                toggleEditButtonVisibility(taskId, data.is_completed);
+            } else {
+                alert("Ошибка при обновлении задачи!");
+            }
+        })
+        .catch(error => console.error("Ошибка:", error));
+    }
+
+    function moveTaskInList(taskId, isCompleted) {
+        const taskElement = document.getElementById(`task-${taskId}`);
+        const activeList = document.querySelector(".task-list.active-tasks");
+        const completedList = document.querySelector(".task-list.completed-tasks");
+
+        if (isCompleted) {
+            completedList.appendChild(taskElement);
+        } else {
+            activeList.appendChild(taskElement);
+        }
+    }
+
+    function toggleEditButtonVisibility(taskId, isCompleted) {
+        const editButton = document.getElementById(`edit-${taskId}`);
+        if (editButton) {
+            if (isCompleted) {
+                editButton.style.display = "none";  // Скрыть кнопку "Изменить"
+            } else {
+                editButton.style.display = "inline-block";  // Показать кнопку "Изменить"
+            }
+        }
+    }
+
+    function getCSRFToken() {
+        return document.querySelector("[name=csrfmiddlewaretoken]").value;
+    }
+</script>
+</body>
+</html>

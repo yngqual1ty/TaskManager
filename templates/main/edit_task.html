@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}Редактировать задачу{% endblock %}
+
+{% block content %}
+    <div class="form-container">
+        <h2>Редактировать задачу</h2>
+        <form method="post">
+            {% csrf_token %}
+
+            <label for="id_title">{{ form.title.label }}</label>
+            {{ form.title }}
+
+            <label for="id_description">{{ form.description.label }}</label>
+            {{ form.description }}
+
+            <label for="id_deadline">{{ form.deadline.label }}</label>
+            <input type="datetime-local" name="deadline" id="id_deadline" value="{{ form.deadline.value|date:'Y-m-d\TH:i' }}" required>
+            <label for="id_priority">{{ form.priority.label }}</label>
+            <select name="priority" id="id_priority">
+                <option value="Low" {% if form.priority.value == "Low" %}selected{% endif %}>Low</option>
+                <option value="Middle" {% if form.priority.value == "Middle" %}selected{% endif %}>Middle</option>
+                <option value="High" {% if form.priority.value == "High" %}selected{% endif %}>High</option>
+            </select>
+
+            <button type="submit" class="btn save">Сохранить</button>
+            {% if error %}
+                <p>{{ error }}</p>
+            {% endif %}
+        </form>
+
+    </div>
+{% endblock %}

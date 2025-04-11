@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+
+{% block title %} Мои задачи {% endblock %}
+
+{% block content %}
+<div class="container">
+  <form action="{% url 'main:search_results' %}" class="Search" method="get">
+    <input class="Search-box" type="text" id="Search-box" name="q" placeholder="Найти задачу">
+    <label class="Search-label" for="Search-box"><i class="fa fa-search"></i></label>
+  </form>
+</div>
+
+
+<div class="task-section">
+    <h2>Список задач</h2>
+    <ul class="task-list active-tasks">
+        {% for task in tasks %}
+        {% if not task.is_completed %}
+            <li class="task-card" id="task-{{ task.id }}">
+                <div class="task-header">
+                    <input type="checkbox" class="task-checkbox" {% if task.is_completed %}checked{% endif %}
+                        onclick="toggleTaskCompletion({{ task.id }})">
+                    <span class="task-title">{{ task.title }}</span>
+                    <span class="task-priority priority-{{ task.priority|lower }}">{{ task.priority }}</span>
+                </div>
+                <span class="task-deadline">Дедлайн: {{ task.deadline|date:"d.m.Y H:i" }}</span>
+                <div class="task-actions">
+                    <a href="{% url 'main:view_task' task.id %}" class="task-button view">Посмотреть</a>
+                    <a href="{% url 'main:edit_task' task.id %}" class="task-button edit" id="edit-{{ task.id }}">Изменить</a>
+                    <a href="#" class="task-button delete" onclick="confirmDelete({{ task.id }})">Удалить</a>
+                </div>
+            </li>
+        {% endif %}
+        {% endfor %}
+    </ul>
+    <a href="{% url 'main:create_task' %}" class="add-task-button">+ Добавить задачу</a>
+
+</div>
+
+<div class="task-section completed-section">
+    <h2>Завершенные задачи</h2>
+    <ul class="task-list completed-tasks">
+        {% for task in tasks %}
+            {% if task.is_completed %}
+                <li class="task-card completed" id="task-{{ task.id }}">
+                    <div class="task-header">
+                        <input type="checkbox" class="task-checkbox" checked
+                            onclick="toggleTaskCompletion({{ task.id }})">
+                        <span class="task-title">{{ task.title }}</span>
+                        <span class="task-priority priority-{{ task.priority|lower }}">{{ task.priority }}</span>
+                    </div>
+                    <span class="task-deadline">Дедлайн: {{ task.deadline|date:"d.m.Y H:i" }}</span>
+                    <div class="task-actions">
+                        <a href="" class="task-button view">Посмотреть</a>
+                        <a href="#" class="task-button delete" onclick="confirmDelete({{ task.id }})">Удалить</a>
+                    </div>
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+</div>
+
+{% endblock %}
+
