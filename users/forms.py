@@ -28,3 +28,6 @@ class EditProfileForm(forms.ModelForm):
             'last_name': 'Фамилия',
             'avatar': 'Фото профиля',
         }
+        widgets = {
+            'avatar': forms.FileInput(attrs={'accept': 'image/*'})
+        }

@@ -546,3 +546,151 @@ form button:hover {
     background-color: #0056b3;
 }
 
+
+.profile-edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.avatar-edit-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.avatar-img-large {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ddd;
+}
+
+.upload-wrapper {
+    position: relative;
+}
+
+.upload-wrapper input[type="file"] {
+    display: none;
+}
+
+.btn {
+    display: inline-block;
+    padding: 8px 16px;
+    font-weight: bold;
+    border-radius: 6px;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    border: none;
+}
+
+.btn-success {
+    background-color: #28a745;
+    color: white;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-secondary {
+    background-color: #007bff;
+    color: white;
+}
+
+
+.custom-file-input {
+    display: none;
+}
+
+.upload-wrapper .btn-secondary {
+    cursor: pointer;
+}
+
+.upload-wrapper label {
+    margin-top: 5px;
+}
+
+
+.task-card {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    transition: 0.3s ease;
+}
+
+.task-card-title {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.task-card-info p {
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+.badge {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 30px;
+    font-weight: bold;
+    color: white;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.priority-low {
+    background-color: #4CAF50;
+}
+
+.priority-medium {
+    background-color: #FFC107;
+}
+
+.priority-high {
+    background-color: #F44336;
+}
+
+.task-card-actions {
+    margin-top: 20px;
+    display: flex;
+    gap: 12px;
+    justify-content: flex-start;
+}
+
+.btn {
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: 0.2s ease;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn-warning {
+    background-color: #ffc107;
+    color: black;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn:hover {
+    filter: brightness(0.9);
+}

@@ -76,6 +76,12 @@ def profile(request):
 
     return render(request, 'main/profile.html', {'form': form, 'error': error})
 
+@login_required
+def clear_avatar(request):
+    user = request.user
+    user.avatar = None
+    user.save()
+    return redirect('users:profile')
 
 
 

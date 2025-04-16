@@ -102,7 +102,7 @@ class SearchResults(ListView):
     def get_queryset(self):
         query = self.request.GET.get('q')
         object_list = Task.objects.filter(
-            Q(title__icontains=query) | Q(description__icontains=query), user=self.request.user
+            Q(title__icontains=query) | Q(description__icontains=query) | Q(priority__icontains=query), user=self.request.user
         )
         return object_list
 

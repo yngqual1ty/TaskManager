@@ -31,10 +31,33 @@
 
     <div class="edit-profile-section">
         <h3>Редактировать профиль</h3>
-        <form method="POST" enctype="multipart/form-data">
+        <form method="post" enctype="multipart/form-data" class="profile-edit-form">
             {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn save">Сохранить изменения</button>
+
+            <label for="id_first_name">Имя:</label>
+            {{ form.first_name }}
+
+            <label for="id_last_name">Фамилия:</label>
+            {{ form.last_name }}
+
+            <label for="id_date_of_birth">Дата рождения:</label>
+            {{ form.date_of_birth }}
+
+            <label>Фото профиля:</label>
+            {% if user.avatar %}
+                <div class="avatar-edit-container">
+                    <a href="{% url 'users:clear_avatar' %}" class="btn btn-danger">Удалить фото</a>
+                </div>
+            {% else %}
+                <p>Фото профиля не загружено.</p>
+            {% endif %}
+
+            <div class="upload-wrapper">
+                <label for="id_avatar" class="btn btn-secondary">Загрузить новое фото</label>
+                <input type="file" name="avatar" id="id_avatar" class="custom-file-input">
+            </div>
+
+            <button type="submit" class="btn btn-success">Сохранить изменения</button>
         </form>
     </div>
 </div>
