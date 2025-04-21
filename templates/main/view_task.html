@@ -13,6 +13,9 @@
         </span>
         <p><strong>Дедлайн:</strong> {{ task.deadline|date:"d.m.Y H:i" }}</p>
         <p><strong>Описание:</strong> {{ task.description }}</p>
+        {% if task.is_overdue %}
+            <span class="overdue-label">Просрочено</span>
+        {% endif %}
     </div>
 
     <div class="task-card-actions">

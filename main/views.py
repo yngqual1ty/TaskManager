@@ -14,6 +14,8 @@ from django.db.models import Q
 
 
 
+
+
 from rest_framework import generics
 from .serializers import TaskSerializer
 import django_filters
@@ -144,3 +146,4 @@ class TaskDetailView(generics.RetrieveUpdateDestroyAPIView):
 
     def get_queryset(self):
         return Task.objects.filter(user=self.request.user)
+

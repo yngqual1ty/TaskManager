@@ -694,3 +694,10 @@ form button:hover {
 .btn:hover {
     filter: brightness(0.9);
 }
+
+
+.overdue-label {
+    color: red;
+    font-weight: bold;
+    margin-left: 10px;
+}

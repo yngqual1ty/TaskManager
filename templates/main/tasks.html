@@ -25,6 +25,9 @@
                     <span class="task-priority priority-{{ task.priority|lower }}">{{ task.priority }}</span>
                 </div>
                 <span class="task-deadline">Дедлайн: {{ task.deadline|date:"d.m.Y H:i" }}</span>
+                {% if task.is_overdue %}
+                    <span class="overdue-label">Просрочено</span>
+                {% endif %}
                 <div class="task-actions">
                     <a href="{% url 'main:view_task' task.id %}" class="task-button view">Посмотреть</a>
                     <a href="{% url 'main:edit_task' task.id %}" class="task-button edit" id="edit-{{ task.id }}">Изменить</a>

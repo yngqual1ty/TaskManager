@@ -65,8 +65,12 @@ DB_PORT=5432
 ``` bash
 python manage.py makemigrations
 python manage.py migrate
+redis-server (в отдельной консоли)
+celery -A LazyManager worker --loglevel=info
+celery -A LazyManager beat --loglevel=info
 python manage.py runserver
 ```
+
 
 🔑 API и документация
 

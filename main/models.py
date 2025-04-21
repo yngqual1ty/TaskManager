@@ -20,6 +20,7 @@ class Task(models.Model):
     creation_date = models.DateTimeField(auto_now_add=True)
     is_completed = models.BooleanField(default=False)
     deadline = models.DateTimeField(blank=True, null=True, validators=[validate_date])
+    is_overdue = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
