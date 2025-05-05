@@ -71,6 +71,32 @@ celery -A LazyManager beat --loglevel=info
 python manage.py runserver
 ```
 
+## 🐳 Запуск с Docker
+
+1. Клонируй репозиторий:
+```bash
+git clone https://github.com/yngqual1ty/TaskManager.git
+cd TaskManager
+```
+2. Создай .env на основе шаблона и заполни:
+```bash
+cp .env.example .env
+```
+
+3. Построй и подними контейнеры:
+```bash
+docker-compose up --build
+```
+
+4. Применить миграции и собрать статику:
+```bash
+docker-compose exec web python manage.py migrate
+docker-compose exec web python manage.py collectstatic --noinput
+```
+5. Создай суперпользователя:
+```bash
+docker-compose exec web python manage.py createsuperuser
+```
 
 🔑 API и документация
 
