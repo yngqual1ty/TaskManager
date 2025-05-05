@@ -1,12 +1,17 @@
 from pathlib import Path
-from decouple import config
+import os
 
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-SECRET_KEY = config('DJANGO_SECRET_KEY')
-DEBUG = config('DEBUG', default=False, cast=bool)
-ALLOWED_HOSTS = config('ALLOWED_HOSTS').split(",")
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = 'django-insecure-%g(x&t^&0$-8d-r^q13bg=+8!@*pi&y(v=sc3&(z9hgc_sd^0b'
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
+
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -58,7 +63,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
 ]
 
 ROOT_URLCONF = 'LazyManager.urls'
@@ -82,17 +86,32 @@ TEMPLATES = [
 WSGI_APPLICATION = 'LazyManager.wsgi.application'
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('POSTGRES_DB'),
-        'USER': config('POSTGRES_USER'),
-        'PASSWORD': config('POSTGRES_PASSWORD'),
-        'HOST': config('POSTGRES_HOST', default='db'),
-        'PORT': config('POSTGRES_PORT', cast=int, default=5432),
-    }
+
+    "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": "manager_db",
+        "USER" : "lazym",
+        "PASSWORD" : "lolka2204",
+        "HOST" : "localhost",
+        "PORT" : "5432",
+      }
 }
 
 
+# 'default': {
+#     'ENGINE': 'django.db.backends.sqlite3',
+#     'NAME': BASE_DIR / 'db.sqlite3',
+# },
+# DATABASES = {
+#   "default": {
+#     "ENGINE": "django.db.backends.postgresql_psycopg2",
+#     "NAME": "manager_db",
+#     "USER" : "lazym",
+#     "PASSWORD" : "lolka2204",
+#     "HOST" : "localhost",
+#     "PORT" : "5432",
+#   }
+# }
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -117,36 +136,30 @@ USE_I18N = True
 
 USE_TZ = True
 
+STATIC_URL = '/static/'
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
 
 
 AUTH_USER_MODEL = 'users.CustomUser'
 
-
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / "static"]
-
-STATIC_ROOT = BASE_DIR / "staticfiles"
-
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
-
+MEDIA_ROOT = BASE_DIR / 'static/media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CELERY_BROKER_URL = f"redis://{config('REDIS_HOST')}:{config('REDIS_PORT')}/0"
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_BACKEND = f"redis://{config('REDIS_HOST')}:{config('REDIS_PORT')}/1"
+CELERY_RESULT_BACKEND = "redis://localhost:6379"
 
 CELERY_BEAT_SCHEDULE = {
-    "check-overdue-tasks-every-10-min": {
+    "check-overdue-tasks-every-1-min": {
         "task": "main.tasks.mark_overdue_tasks",
-        "schedule": 600.0,
+        "schedule": 60.0,  # каждую минуту
     },
 }
 
-CELERY_TIMEZONE = "UTC"
-
-REDIS_HOST = config('REDIS_HOST', default='localhost')
-REDIS_PORT = config('REDIS_PORT', default=6379, cast=int)
+CELERY_TIMEZONE = "UTC"  # или "Europe/Moscow"
