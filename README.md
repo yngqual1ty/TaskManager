@@ -17,8 +17,8 @@
 - ✅ REST API с JWT авторизацией
 - ✅ Swagger-документация
 - ✅ PostgreSQL база данных
-- 🔄 Поддержка Celery (в разработке)
-- 📦 Docker-окружение (в разработке)
+- ✅ Поддержка Celery 
+- ✅ Docker-окружение 
 
 ---
 
@@ -30,8 +30,8 @@
 - PostgreSQL
 - JWT Authentication (SimpleJWT)
 - drf-spectacular (Swagger Docs)
-- Docker (планируется)
-- Celery + Redis (планируется)
+- Docker/Docker-compose
+- Celery + Redis 
 
 ---
 
